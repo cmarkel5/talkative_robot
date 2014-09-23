@@ -32,3 +32,6 @@ puts "What are your plans for this evening?"
 evening_plans = gets.chomp.capitalize
 puts "#{evening_plans}, huh? I've been meaning to do that."
 
+puts "Hey Mr. Instructor dude"
+
+
