@@ -103,4 +103,8 @@ else
 	puts "Ok great, I'll just buy everything that's currently on the list."
 end
 
+grocery_list = IO.read("grocery_list.txt").chomp.split(", ")
+grocery_list.map! { |item| item.downcase }
+grocery_list.pop
+IO.write("new_grocery_list.txt", grocery_list)
 
