@@ -55,8 +55,7 @@ user[:age] = gets.chomp.to_i
 
 puts "Hi #{user[:name]} who is #{user[:age]} years old!"
 # puts "Do you mind if I call you #{user[:name].chars.first}?"
-puts "You're getting kind of old." if user[:age] > 50
-puts "You're certainly getting up there in age." unless user[:age] < 50
+puts user[:age] > 50 ? 'You\'re getting kind of old.' : 'You\'re not "old" yet'
 
 
 age_differential(user[:age])
