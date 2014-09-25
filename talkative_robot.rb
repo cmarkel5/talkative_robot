@@ -41,6 +41,10 @@ def are_you_a_whippersnapper(age)
 	puts age < 23 ? "You're still a young whippersnapper!" : "You're no longer a whippersnapper..."
 end
 
+def old?(user)
+	user[:age] > 50
+end
+
 
 user = {}
 
@@ -55,7 +59,7 @@ user[:age] = gets.chomp.to_i
 
 puts "Hi #{user[:name]} who is #{user[:age]} years old!"
 # puts "Do you mind if I call you #{user[:name].chars.first}?"
-puts user[:age] > 50 ? 'You\'re getting kind of old.' : 'You\'re not "old" yet'
+puts old?(user) ? 'You\'re getting kind of old.' : 'You\'re not "old" yet'
 
 
 age_differential(user[:age])
@@ -79,14 +83,14 @@ puts "#{user[:evening_plans]}, huh? I've been meaning to do that."
 
 
 grocery_list = ["eggs", "milk", "bread", "cheese", "goldfish"]
-puts "Please go to the grocery store. Here is your list: #{grocery_list}"
+puts "Please go to the grocery store. Here is your list: #{grocery_list.join(", ")}"
 random_item = grocery_list.sample
 puts "Did you grab the #{random_item}? (Y or N)."
 user[:random_item_response] = gets.chomp.capitalize
 if user[:random_item_response] == "Y"
 	grocery_list.delete(random_item)
 end
-puts "#{grocery_list}"
+puts grocery_list.join(", ")
 
 puts "Did you remember anything else that you wanted? (Y or N)."
 user[:new_item_response] = gets.chomp.capitalize
@@ -94,7 +98,7 @@ if user[:new_item_response] == "Y"
 	puts "Please tell me what that item is."
 	user[:new_item] = gets.chomp.downcase
 	grocery_list << user[:new_item]
-	puts "#{grocery_list}"
+	puts grocery_list.join(", ")
 else
 	puts "Ok great, I'll just buy everything that's currently on the list."
 end
