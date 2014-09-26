@@ -2,7 +2,7 @@ require 'pry'
 
 def over_under_50(user)
 	if user[:age] > 50
-		puts "You are a man of experience!"
+		puts "You are a person of experience!"
 	else
 		puts "You have much to learn grasshopper."
 	end
@@ -12,7 +12,7 @@ def age_differential(user)
 	age = user[:age]
 	case
 	when age < 0
-		puts "You're must not exist. Your age differential is NA."
+		puts "Based on your entry, you must not exist. Please enter a real age."
 	when age < 75
 		puts "You'll be 75 in #{75 - age} years."
 	when age > 75
@@ -64,10 +64,19 @@ def greeting(user)
 	puts old?(user) ? 'You\'re kind of old.' : 'You\'re not "old" yet'
 end
 
+
 #GROCERY SHOPPING BEGINS
 def create_grocery_list
 	grocery_list = ["eggs", "milk", "bread", "cheese", "goldfish"]
 	IO.write("grocery.txt", grocery_list.join(", "))
+end
+
+def save_grocery_list(file, list)
+	IO.write(file, list.join(", "))
+end
+
+def show_grocery_list(show_list)
+	show_list.each_index { |i| puts "Item #{i+1} -- #{show_list[i]}"}
 end
 
 def grocery_shopping
@@ -76,7 +85,7 @@ def grocery_shopping
 	grocery_list = IO.read("grocery.txt").chomp.split(", ")
 	
 	puts "I have a list of groceries that I need from the store. The list is below if you could grab these items:"
-	grocery_list.each_index { |i| puts "Item #{i+1} -- #{grocery_list[i]}"}
+	show_grocery_list(grocery_list)
 	
 	random_item = grocery_list.sample
 	puts "Wait, we might already have #{random_item}. Do we? (Y or N)."
@@ -85,7 +94,7 @@ def grocery_shopping
 	if random_item_response == "Y"
 		grocery_list.delete(random_item)
 		puts "Ok sweet. Then your revised list is:"
-		grocery_list.each_index { |i| puts "Item #{i+1} -- #{grocery_list[i]}"}
+		show_grocery_list(grocery_list)
 	end
 
 	puts "Did you remember anything else that you wanted? (Y or N)."
@@ -94,7 +103,8 @@ def grocery_shopping
 		puts "Please tell me what that item is."
 		new_item = gets.chomp.downcase
 		grocery_list << new_item
-		grocery_list.each_index { |i| puts "Item #{i+1} -- #{grocery_list[i]}" }
+		puts "Ok, here we go. Please see final list below:"
+		show_grocery_list(grocery_list)
 	else
 		puts "Ok great, I'll just buy everything that's currently on the list."
 	end
@@ -103,9 +113,7 @@ def grocery_shopping
 
 end
 
-def save_grocery_list(file, list)
-	IO.write(file, list.join(", "))
-end
+
 
 the_user = get_user_info
 greeting(the_user)
@@ -141,8 +149,7 @@ authors = select_authors(all_users)
 
 original_author = select_by_name(authors, "Chris Markel").first
 
-puts original_author[:name]
-
+#puts original_author[:name]
 #END OF ENUMERATION
 
 
