@@ -64,22 +64,29 @@ def greeting(user)
 	puts old?(user) ? 'You\'re kind of old.' : 'You\'re not "old" yet'
 end
 
-the_user = get_user_info
-greeting(the_user)
-age_differential(the_user)
-over_under_50(the_user)
-age_and_gender_assumption(the_user)
-are_you_a_whippersnapper(the_user)
+#GROCERY SHOPPING BEGINS
+def create_grocery_list
+	grocery_list = ["eggs", "milk", "bread", "cheese", "goldfish"]
+	IO.write("grocery.txt", grocery_list.join(", "))
+end
 
 def grocery_shopping
-	grocery_list = ["eggs", "milk", "bread", "cheese", "goldfish"]
+	create_grocery_list
+
+	grocery_list = IO.read("grocery.txt").chomp.split(", ")
+	
+	puts "I have a list of groceries that I need from the store. The list is below if you could grab these items:"
+	grocery_list.each_index { |i| puts "Item #{i+1} -- #{grocery_list[i]}"}
+	
 	random_item = grocery_list.sample
-	puts "Did you grab the #{random_item}? (Y or N)."
+	puts "Wait, we might already have #{random_item}. Do we? (Y or N)."
 	random_item_response = gets.chomp.capitalize
+
 	if random_item_response == "Y"
 		grocery_list.delete(random_item)
+		puts "Ok sweet. Then your revised list is:"
+		grocery_list.each_index { |i| puts "Item #{i+1} -- #{grocery_list[i]}"}
 	end
-	puts grocery_list.join(", ")
 
 	puts "Did you remember anything else that you wanted? (Y or N)."
 	new_item_response = gets.chomp.capitalize
@@ -87,32 +94,59 @@ def grocery_shopping
 		puts "Please tell me what that item is."
 		new_item = gets.chomp.downcase
 		grocery_list << new_item
-		puts grocery_list.join(", ")
+		grocery_list.each_index { |i| puts "Item #{i+1} -- #{grocery_list[i]}" }
 	else
 		puts "Ok great, I'll just buy everything that's currently on the list."
 	end
 
+	save_grocery_list("new_grocery_list.txt", grocery_list)
+
 end
 
+def save_grocery_list(file, list)
+	IO.write(file, list.join(", "))
+end
+
+the_user = get_user_info
+greeting(the_user)
+age_differential(the_user)
+over_under_50(the_user)
+age_and_gender_assumption(the_user)
+are_you_a_whippersnapper(the_user)
 grocery_shopping
 
 
-author = {name: "Chris Markel", age: 27, gender: "M"}
-people = [the_user, author]
-author = people.reject { |person| person[:name] != "Chris Markel" }.first
-
-def select_by_name(list_of_users, name)
-	list_of_users.select { |person| person[:name] == name }.first
+# START OF ENUMERATION
+def select_by_name(list_of_people, name)
+	list_of_people.select { |person| person[:name] == name }
 end
 
-author = select_by_name(people, author[:name])
+def select_authors(list_of_people)
+	list_of_people.select { |person| person[:author] }
+end
+
+def find_by_email(list_of_people, email)
+	list_of_people.select { |person| person[:email] == email }.first
+end
+
+author =	{ name: "Chris Markel", age: 27, gender: "M", author: true, email: "cmarkel5@gmail.com" }
+rando =		{ name: "Chris Markel", age: 26, gender: "M", author: false, email: "rando@rando.com"}
+gerry = 	{ name: "Gerry Pass", age: 28, gender: "M", author: true, email: "rgpass@gmail.com" }
+
+all_users = [the_user, author, rando, gerry]
+
+# author = all_people.reject { |person| person[:name] != "Chris Markel" }.first
+
+authors = select_authors(all_users)
+
+original_author = select_by_name(authors, "Chris Markel").first
+
+puts original_author[:name]
+
+#END OF ENUMERATION
 
 
-# puts "Reading grocery list from file grocery.txt."
 
-# grocery_list = IO.read("grocery.txt").chomp.split(", ")
-# grocery_list.map! { |item| item.downcase }
-# IO.write("new_grocery.txt", grocery_list)
 
-# grocery_list = ["eggs", "milk", "bread", "cheese", "goldfish"]
-# grocery_list.each_index { |i| puts "Item #{i+1} -- #{grocery_list[i]}"}
+
+
