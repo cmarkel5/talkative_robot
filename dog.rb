@@ -1,11 +1,12 @@
 require 'pry'
 
-class Dog
+class Person
 
 	# constructor
-	def initialize(name, age)
+	def initialize(name, age, groceries)
 		@name = name
 		@age = age
+		@groceries = groceries
 	end
 
 	# getter (aka accessor method)
@@ -23,9 +24,32 @@ class Dog
 	end
 
 	def greet
-		puts "The dog's name is #{@name} who is #{@age} years old."
+		puts "Hello #{@name} who is #{@age} years old."
+		@groceries.print
+	end
+
+	def groceries
+		@groceries
 	end
 end
+
+class GroceryList
+	def intialize(items)
+		@items = items
+	end
+
+	def print
+		puts items
+	end
+
+	def items
+		@items
+	end
+end
+
+gl = GroceryList.new(['eggs', 'bacon'])
+mike = Person.new("Mike", 34, gl)
+mike.greet
 
 my_dog = Dog.new("Miko", 1)
 my_dog.greet
