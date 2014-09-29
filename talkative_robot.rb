@@ -1,11 +1,7 @@
 require 'pry'
 
 def over_under_50(user)
-	if user[:age] > 50
-		puts "You are a person of experience!"
-	else
-		puts "You have much to learn grasshopper."
-	end
+	puts user[:age] > 50 ? "You are a person of experience!" : "You have much to learn grasshopper."
 end
 
 def age_differential(user)
@@ -71,8 +67,8 @@ def create_grocery_list
 	IO.write("grocery.txt", grocery_list.join(", "))
 end
 
-def save_grocery_list(file, list)
-	IO.write(file, list.join(", "))
+def save_grocery_list(file, grocery_list)
+	IO.write(file, grocery_list.join(", "))
 end
 
 def show_grocery_list(show_list)
