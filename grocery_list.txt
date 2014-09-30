@@ -1,1 +1,1 @@
-eggs, milk, bread, goldfish
+eggs, bread, cheese, goldfish, chicken
